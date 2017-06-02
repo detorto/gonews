@@ -1,0 +1,99 @@
+  <!DOCTYPE html>
+  <html>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <title>GO-CROWLER</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+  html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
+  </style>
+  <body class="w3-light-grey">
+
+  <!-- Page Container -->
+  <div class="w3-content w3-margin-top" style="max-width:1400px;">
+
+    
+
+   <!-- The Grid -->
+    <div class="w3-container">
+      <!-- Right Column -->
+      <div >
+
+        <div class="w3-container w3-card-2 w3-white w3-margin-bottom">
+          <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-area-chart fa-fw w3-margin-right w3-xxlarge w3-text-teal"></i>Go-crowler</h2>
+          <div class="w3-container">
+            <h5 class="w3-opacity"><b>Scraps GoogleNews, YandexNews for a query, and shows the trend!</b></h5>
+          </div>
+          
+               <form class="w3-container" action="/submit/" action="post">
+                         <input type="text" name="query" class="w3-threequarter w3-input w3-border" placeholder="Query...">
+                         <button class="w3-button w3-teal w3-quarter w3-border">Go</button>
+              </form>
+          <br>
+        </div>
+
+        
+
+        <div class="w3-container w3-card-2 w3-white">
+          <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-certificate fa-fw w3-margin-right w3-xxlarge w3-text-teal"></i>Last queries</h2>
+          
+          <div id="queries">
+
+             <!--  <div class="w3-container">
+                <h5 class="w3-opacity"><b>BOLGENOS</b></h5>
+                <h6 class="w3-text-teal"><i class="fa fa-calendar fa-fw w3-margin-right"></i>12.03.12 - STATUS</h6>
+                 <div class="w3-third">Mentions: 100 </div>
+                 <div class="w3-third">  Last mention: 12.12.12</div>
+                 <div class="w3-third">  HERE WILL BE DRAGONS</div>
+              </div>
+              <hr>
+                -->
+          </div>
+
+        </div>
+    </div >
+    
+    <!-- End Grid -->
+    </div>
+
+    <!-- End Page Container -->
+  </div>
+
+  <footer class="w3-container w3-teal w3-center w3-margin-top">
+KAKAHA  </footer>
+
+  </body>
+
+
+  <script type="text/javascript">
+       function f () {
+    
+            
+            $.getJSON("/data/queries", function(result) {
+            
+            
+            $("#queries").html("");
+            $.each(result["Queries"], function(i, field) {
+
+                var html = `<div class="w3-container">
+                            <h5 class="w3-opacity"><b>`+field["Text"]+`</b></h5>
+                            <h6 class="w3-text-teal"><i class="fa fa-calendar fa-fw w3-margin-right"></i>`+field["SumbitTime"]+` - `+ field["Status"] + `</h6>
+                            <div class="w3-third">Mentions: `+field["MentionsCount"] + `</div>
+                            <div class="w3-third">Last mention: `+field["LastMention"] + `</div>
+                            <div class="w3-third">  HERE WILL BE DRAGONS</div>
+                            </div><hr>`
+               $("#queries").append(html);
+            });
+        });
+    };
+    
+    $(document).ready(f)
+    setInterval(f,1000)
+
+
+  </script>
+  </html>
