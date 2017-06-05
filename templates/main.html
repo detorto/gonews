@@ -80,7 +80,7 @@ KAKAHA  </footer>
             $.each(result["Queries"], function(i, field) {
 
                 var html = `<div class="w3-container">
-                            <h5 class="w3-opacity"><b>`+field["Text"]+`</b></h5>
+                            <h5 class="w3-opacity"><b><a href="/mentions?q=`+field["Text"]+'">'+field["Text"]+`</a></b></h5>
                             <h6 class="w3-text-teal"><i class="fa fa-calendar fa-fw w3-margin-right"></i>`+field["SumbitTime"]+` - `+ field["Status"] + `</h6>
                             <div class="w3-third">Mentions: `+field["MentionsCount"] + `</div>
                             <div class="w3-third">Last mention: `+field["LastMention"] + `</div>

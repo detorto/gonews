@@ -9,6 +9,7 @@ import (
     "math/rand"
     "gopkg.in/headzoo/surf.v1"
     "github.com/headzoo/surf/browser"
+    "github.com/headzoo/surf/agent"
    
 )
 
@@ -24,14 +25,13 @@ type Mention struct {
 
 
 func randomUserAgent() string {
-    ua := []string{ "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36",
-                        "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:53.0) Gecko/20100101 Firefox/53.0",
-                        "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36",
-                        "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:53.0) Gecko/20100101 Firefox/53.0",
-                        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36",
-                        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_4) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.1 Safari/603.1.30",
-                        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36",
-                    }
+    ua := []string{ agent.AOL(),
+                    agent.Chrome(),
+                    agent.Firefox(),
+                    agent.Konqueror(),
+                    agent.MSIE(),
+                    agent.Opera(),
+                    agent.Safari()}
 
     return ua[rand.Intn(len(ua))]
 }

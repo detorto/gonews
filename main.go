@@ -87,14 +87,14 @@ func do_scrap(scraper scrapers.Scraper, maxpage int) {
       	
         for iter.Next(&query) {
 
-            full_processes := true;
+            full_processed := true;
 			for _, v := range query.ParseStatus { 
-				if v != maxpage {
-					full_processes = false
+				if v < maxpage {
+					full_processed = false
 				}
 			}
 
-			if full_processes {
+			if full_processed {
 					updateStatus(query.ID, "COMPLETE")
 			}
 
@@ -216,7 +216,19 @@ func getMentions(qwery string) []scrapers.Mention {
     return result
 }
 
-func resultp(w http.ResponseWriter, r *http.Request) {
+func mentions_data(w http.ResponseWriter, r *http.Request) {
+    mentions := getMentions(r.URL.Query()["q"][0])
+    b, err := json.Marshal(struct {Mentions []scrapers.Mention} {Mentions: mentions})
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+        
+    fmt.Fprintf(w, string(b[:]))
+}
+
+func mentions_page(w http.ResponseWriter, r *http.Request) {
+
     
     mentions := getMentions(r.URL.Query()["q"][0])
     for _,m:= range mentions {
@@ -242,9 +254,12 @@ func main() {
 
     fmt.Println("Mongo client initialized")
     http.HandleFunc("/", mainpage)
+    http.HandleFunc("/mentions", mentions_page)
+
     http.HandleFunc("/submit/", submit)
-    http.HandleFunc("/result", resultp)
+    
     http.HandleFunc("/data/queries/", queries)
+    http.HandleFunc("/data/mentions", mentions_data)
 
     
     
